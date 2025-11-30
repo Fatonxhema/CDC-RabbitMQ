@@ -28,9 +28,12 @@ CREATE TABLE IF NOT EXISTS products (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE PUBLICATION dbz_publication FOR ALL TABLES;
+
 -- Insert sample routing configurations
 INSERT INTO routing_configurations (id, table_name, exchange, routing_key, queue, is_active, created_at)
 VALUES 
     (gen_random_uuid(), 'customers', 'cdc.exchange', 'customer.events', 'customer.events', true, CURRENT_TIMESTAMP),
     (gen_random_uuid(), 'orders', 'cdc.exchange', 'order.events', 'order.events', true, CURRENT_TIMESTAMP),
     (gen_random_uuid(), 'products', 'cdc.exchange', 'product.events', 'product.events', true, CURRENT_TIMESTAMP);
+

@@ -19,7 +19,6 @@
     <PackageReference Include="SwaggerUi" Version="1.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.0.1" />
-    <PackageReference Include="Swashbuckle.Core" Version="5.6.0" />
   </ItemGroup>
 
 </Project>

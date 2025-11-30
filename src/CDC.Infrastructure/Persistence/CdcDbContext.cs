@@ -9,7 +9,10 @@ public class CdcDbContext : DbContext
 
     public DbSet<CdcEvent> CdcEvents { get; set; }
     public DbSet<RoutingConfiguration> RoutingConfigurations { get; set; }
-
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<CdcEvent>(entity =>

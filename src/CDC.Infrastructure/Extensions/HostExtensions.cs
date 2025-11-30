@@ -10,7 +10,7 @@ public static class HostExtensions
 {
     public static IApplicationBuilder ApplyMigration(this IApplicationBuilder app)
     {
-        using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+        using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceProvider>().CreateScope())
         {
             var context = serviceScope.ServiceProvider.GetService<CdcDbContext>();
             context.Database.Migrate();
