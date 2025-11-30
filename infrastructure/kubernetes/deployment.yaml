@@ -1,0 +1,120 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cdc-pipeline
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cdc-config
+  namespace: cdc-pipeline
+data:
+  POSTGRES_HOST: "postgres-service"
+  POSTGRES_DB: "cdc_pipeline"
+  REDIS_HOST: "redis-service:6379"
+  RABBITMQ_HOST: "rabbitmq-service"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer-api
+  namespace: cdc-pipeline
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: consumer-api
+  template:
+    metadata:
+      labels:
+        app: consumer-api
+    spec:
+      containers:
+      - name: consumer-api
+        image: cdc-consumer-api:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Host=$(POSTGRES_HOST);Database=$(POSTGRES_DB);Username=postgres;Password=postgres"
+        - name: ConnectionStrings__Redis
+          value: "$(REDIS_HOST)"
+        - name: RabbitMQ__Host
+          value: "$(RABBITMQ_HOST)"
+        envFrom:
+        - configMapRef:
+            name: cdc-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: listener-api
+  namespace: cdc-pipeline
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: listener-api
+  template:
+    metadata:
+      labels:
+        app: listener-api
+    spec:
+      containers:
+      - name: listener-api
+        image: cdc-listener-api:latest
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: cdc-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: retry-processor
+  namespace: cdc-pipeline
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: retry-processor
+  template:
+    metadata:
+      labels:
+        app: retry-processor
+    spec:
+      containers:
+      - name: retry-processor
+        image: cdc-retry-processor:latest
+        envFrom:
+        - configMapRef:
+            name: cdc-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: consumer-api-service
+  namespace: cdc-pipeline
+spec:
+  selector:
+    app: consumer-api
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: listener-api-service
+  namespace: cdc-pipeline
+spec:
+  selector:
+    app: listener-api
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: ClusterIP
