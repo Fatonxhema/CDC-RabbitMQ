@@ -26,7 +26,7 @@ public class RedisCacheService : ICacheService
     {
         var json = JsonSerializer.Serialize(value);
         var options = new DistributedCacheEntryOptions();
-        
+
         if (expiration.HasValue)
         {
             options.AbsoluteExpirationRelativeToNow = expiration.Value;

@@ -1,4 +1,3 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
@@ -14,6 +13,31 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CDC.Listener.API", "src\CDC.Listener.API\CDC.Listener.API.csproj", "{A5555555-5555-5555-5555-555555555555}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CDC.RetryProcessor", "src\CDC.RetryProcessor\CDC.RetryProcessor.csproj", "{A6666666-6666-6666-6666-666666666666}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8909AE26-3C2B-456F-931C-9BA0340AAD10}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{222B9F85-C18F-408F-A282-0AE89238F356}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastructure", "{33FC8D3C-07C2-45BC-8E48-FF115C5779BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{E4F7B818-50C9-469E-9D1A-A718C2D8357E}"
+	ProjectSection(SolutionItems) = preProject
+		infrastructure\docker\docker-compose.yml = infrastructure\docker\docker-compose.yml
+		infrastructure\docker\init-db.sql = infrastructure\docker\init-db.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{4297EFBB-F44B-46B1-B6B3-4643AC022B2F}"
+	ProjectSection(SolutionItems) = preProject
+		infrastructure\docker\config\application.properties = infrastructure\docker\config\application.properties
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "kubernetes", "kubernetes", "{08904CF1-5B40-4390-A827-51BBD01737F1}"
+	ProjectSection(SolutionItems) = preProject
+		infrastructure\kubernetes\deployment.yml = infrastructure\kubernetes\deployment.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,5 +69,22 @@ Global
 		{A6666666-6666-6666-6666-666666666666}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6666666-6666-6666-6666-666666666666}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6666666-6666-6666-6666-666666666666}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A1111111-1111-1111-1111-111111111111} = {222B9F85-C18F-408F-A282-0AE89238F356}
+		{A2222222-2222-2222-2222-222222222222} = {222B9F85-C18F-408F-A282-0AE89238F356}
+		{A3333333-3333-3333-3333-333333333333} = {222B9F85-C18F-408F-A282-0AE89238F356}
+		{A4444444-4444-4444-4444-444444444444} = {222B9F85-C18F-408F-A282-0AE89238F356}
+		{A5555555-5555-5555-5555-555555555555} = {222B9F85-C18F-408F-A282-0AE89238F356}
+		{A6666666-6666-6666-6666-666666666666} = {222B9F85-C18F-408F-A282-0AE89238F356}
+		{E4F7B818-50C9-469E-9D1A-A718C2D8357E} = {33FC8D3C-07C2-45BC-8E48-FF115C5779BE}
+		{4297EFBB-F44B-46B1-B6B3-4643AC022B2F} = {E4F7B818-50C9-469E-9D1A-A718C2D8357E}
+		{08904CF1-5B40-4390-A827-51BBD01737F1} = {33FC8D3C-07C2-45BC-8E48-FF115C5779BE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E65A06BB-3571-47AB-AC3D-7426772F2A66}
 	EndGlobalSection
 EndGlobal

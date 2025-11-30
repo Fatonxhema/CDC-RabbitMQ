@@ -1,7 +1,6 @@
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
-using System.Text.Json;
 
 namespace CDC.Listener.API;
 
@@ -25,10 +24,10 @@ public class ListenerBackgroundService : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         _channel = _connection.CreateModel();
-        
+
         // Declare queues for different operations/tables
         var queues = new[] { "customer.events", "order.events", "product.events" };
-        
+
         foreach (var queue in queues)
         {
             _channel.QueueDeclare(
@@ -48,8 +47,8 @@ public class ListenerBackgroundService : BackgroundService
             {
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
-                
-                _logger.LogInformation("Received message on queue {Queue}: {Message}", 
+
+                _logger.LogInformation("Received message on queue {Queue}: {Message}",
                     ea.RoutingKey, message);
 
                 // Simulate processing

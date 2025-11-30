@@ -30,9 +30,9 @@ public class CdcConsumerBackgroundService : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         _channel = _connection.CreateModel();
-        
+
         var queueName = _configuration["RabbitMQ:CdcQueue"] ?? "cdc.events";
-        
+
         _channel.QueueDeclare(
             queue: queueName,
             durable: true,
@@ -55,9 +55,9 @@ public class CdcConsumerBackgroundService : BackgroundService
                 {
                     using var scope = _serviceProvider.CreateScope();
                     var processingService = scope.ServiceProvider.GetRequiredService<CdcProcessingService>();
-                    
+
                     await processingService.ProcessCdcEventAsync(cdcMessage, stoppingToken);
-                    
+
                     _channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
                     _logger.LogInformation("Processed message {MessageId}", cdcMessage.MessageId);
                 }

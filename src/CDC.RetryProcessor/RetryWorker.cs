@@ -46,7 +46,7 @@ public class RetryWorker : BackgroundService
                     try
                     {
                         var routingConfig = await routingService.GetRoutingConfigurationAsync(evt.TableName, stoppingToken);
-                        
+
                         if (routingConfig != null)
                         {
                             await _retryPipeline.ExecuteAsync(async ct =>
@@ -67,7 +67,7 @@ public class RetryWorker : BackgroundService
                     {
                         _logger.LogError(ex, "Retry failed for message {MessageId}", evt.MessageId);
                         evt.RetryCount++;
-                        
+
                         if (evt.RetryCount >= 5)
                         {
                             evt.Status = ProcessingStatus.DeadLettered.ToString();
@@ -76,7 +76,7 @@ public class RetryWorker : BackgroundService
                         {
                             evt.Status = ProcessingStatus.RetryScheduled.ToString();
                         }
-                        
+
                         evt.ErrorMessage = ex.Message;
                     }
 

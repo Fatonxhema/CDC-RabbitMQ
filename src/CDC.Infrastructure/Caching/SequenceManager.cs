@@ -42,7 +42,7 @@ public class SequenceManager : ISequenceManager
     public async Task<List<CdcMessageDto>> GetBufferedMessagesAsync(string partitionKey, CancellationToken cancellationToken = default)
     {
         var messages = new List<CdcMessageDto>();
-        
+
         for (long i = 0; i < 100; i++)
         {
             var key = $"{BufferPrefix}{partitionKey}:{i}";

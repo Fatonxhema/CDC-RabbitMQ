@@ -136,7 +136,7 @@ public class CdcProcessingService
 
             cdcEvent.Status = ProcessingStatus.Completed.ToString();
             cdcEvent.ProcessedAt = DateTime.UtcNow;
-            
+
             _logger.LogInformation(
                 "Successfully processed and forwarded message {MessageId} from table {TableName}",
                 message.MessageId, message.TableName);
@@ -160,11 +160,11 @@ public class CdcProcessingService
     private async Task ProcessBufferedMessagesAsync(string partitionKey, CancellationToken cancellationToken)
     {
         var bufferedMessages = await _sequenceManager.GetBufferedMessagesAsync(partitionKey, cancellationToken);
-        
+
         foreach (var bufferedMessage in bufferedMessages.OrderBy(m => m.SequenceNumber))
         {
             var expectedSequence = await _sequenceManager.GetExpectedSequenceAsync(partitionKey, cancellationToken);
-            
+
             if (bufferedMessage.SequenceNumber == expectedSequence)
             {
                 _logger.LogInformation(

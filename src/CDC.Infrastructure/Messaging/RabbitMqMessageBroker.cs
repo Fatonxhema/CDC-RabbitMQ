@@ -32,16 +32,16 @@ public class RabbitMqMessageBroker : IMessageBroker, IDisposable
         properties.Timestamp = new AmqpTimestamp(DateTimeOffset.UtcNow.ToUnixTimeSeconds());
 
         _channel.BasicPublish(exchange, routingKey, properties, body);
-        
+
         _logger.LogDebug("Published message to exchange {Exchange} with routing key {RoutingKey}", exchange, routingKey);
-        
+
         await Task.CompletedTask;
     }
 
     public async Task<bool> PublishWithConfirmationAsync<T>(string exchange, string routingKey, T message, CancellationToken cancellationToken = default)
     {
         await PublishAsync(exchange, routingKey, message, cancellationToken);
-        
+
         try
         {
             _channel.WaitForConfirmsOrDie(TimeSpan.FromSeconds(5));
