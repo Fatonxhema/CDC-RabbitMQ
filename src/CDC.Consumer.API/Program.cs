@@ -21,7 +21,7 @@ builder.Services.AddSwaggerGen();
 
 // Database
 builder.Services.AddDbContext<CdcDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")).UseSnakeCaseNamingConvention());
 
 // Redis
 var redisConnection = ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("Redis") ?? "localhost:6379");

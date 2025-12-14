@@ -31,6 +31,8 @@ public class RabbitMqMessageBroker : IMessageBroker, IDisposable
         properties.MessageId = Guid.NewGuid().ToString();
         properties.Timestamp = new AmqpTimestamp(DateTimeOffset.UtcNow.ToUnixTimeSeconds());
 
+        _channel.ExchangeDeclare(exchange, ExchangeType.Topic, true);
+
         _channel.BasicPublish(exchange, routingKey, properties, body);
 
         _logger.LogDebug("Published message to exchange {Exchange} with routing key {RoutingKey}", exchange, routingKey);

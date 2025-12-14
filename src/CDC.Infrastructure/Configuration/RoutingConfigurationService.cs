@@ -24,7 +24,7 @@ public class RoutingConfigurationService : IRoutingConfigurationService
         var cacheKey = $"{CacheKeyPrefix}{tableName}";
 
         if (_cache.TryGetValue(cacheKey, out RoutingConfiguration? cachedConfig))
-        {
+        { 
             return cachedConfig;
         }
 

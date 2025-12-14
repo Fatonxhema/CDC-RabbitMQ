@@ -37,3 +37,15 @@ VALUES
     (gen_random_uuid(), 'orders', 'cdc.exchange', 'order.events', 'order.events', true, CURRENT_TIMESTAMP),
     (gen_random_uuid(), 'products', 'cdc.exchange', 'product.events', 'product.events', true, CURRENT_TIMESTAMP);
 
+
+
+-- test CDC by inserting the records
+INSERT INTO public.products(id,name,price,stock_quantity,created_at)
+VALUEs(8,'test',12,12,'12-12-2025');
+
+INSERT INTO public.customers(id,name,email,created_at)
+VALUES(2,'John Doe','john.doe@noexist.com','12-12-2025');
+
+INSERT INTO public.orders(id,customer_id,total_amount,status,created_at)
+VALUES(1,2,10.10,1,'12-12-2025')
+

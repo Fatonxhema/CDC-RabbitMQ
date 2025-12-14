@@ -49,17 +49,27 @@ public class CdcConsumerBackgroundService : BackgroundService
             {
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
-                var cdcMessage = JsonSerializer.Deserialize<CdcMessageDto>(message);
+                var cdcCompletePayload = JsonSerializer.Deserialize<CDCObject>(message);
 
-                if (cdcMessage != null)
+                if (cdcCompletePayload != null)
                 {
                     using var scope = _serviceProvider.CreateScope();
                     var processingService = scope.ServiceProvider.GetRequiredService<CdcProcessingService>();
 
-                    await processingService.ProcessCdcEventAsync(cdcMessage, stoppingToken);
+                    CdcMessageDto cdcMessage1 = new(
+
+                        Guid.NewGuid().ToString(),
+                        cdcCompletePayload.schema.name,
+                        "INSERT",
+                        message,
+                        0,
+                        null,
+                        DateTime.UtcNow
+                    );
+                    await processingService.ProcessCdcEventAsync(cdcMessage1, stoppingToken);
 
                     _channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
-                    _logger.LogInformation("Processed message {MessageId}", cdcMessage.MessageId);
+                    _logger.LogInformation("Processed message {MessageId}", cdcMessage1.MessageId);
                 }
             }
             catch (Exception ex)

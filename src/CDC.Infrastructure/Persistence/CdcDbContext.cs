@@ -17,15 +17,16 @@ public class CdcDbContext : DbContext
     {
         modelBuilder.Entity<CdcEvent>(entity =>
         {
+            entity.ToTable("cdc_events");
             entity.HasKey(e => e.Id);
             entity.HasIndex(e => e.MessageId).IsUnique();
             entity.HasIndex(e => e.Status);
-            entity.HasIndex(e => new { e.PartitionKey, e.SequenceNumber });
             entity.Property(e => e.Payload).HasColumnType("jsonb");
         });
 
         modelBuilder.Entity<RoutingConfiguration>(entity =>
         {
+            entity.ToTable("routing_configurations");
             entity.HasKey(e => e.Id);
             entity.HasIndex(e => e.TableName).IsUnique();
             entity.HasIndex(e => e.IsActive);
