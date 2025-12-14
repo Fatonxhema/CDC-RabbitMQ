@@ -51,6 +51,7 @@ services:
       - redis_data:/data
     networks:
       - cdc-network
+
   debezium-server:
     image: debezium/server:2.4
     container_name: cdc-debezium-server
