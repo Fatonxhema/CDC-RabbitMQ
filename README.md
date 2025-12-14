@@ -1,4 +1,4 @@
-# CDC Pipeline with RabbitMQ, Debezium, and .NET 8
+# CDC Pipeline with RabbitMQ, Debezium, and .NET 
 
 A production-ready Change Data Capture (CDC) pipeline built with clean architecture principles, featuring:
 - PostgreSQL CDC using Debezium
@@ -60,7 +60,7 @@ PostgreSQL (CDC) → Debezium → RabbitMQ → Consumer API → Listener API
 
 ## Prerequisites
 
-- .NET 8 SDK
+- .NET 10 SDK
 - Docker & Docker Compose
 - PostgreSQL 15+
 - RabbitMQ 3.12+
